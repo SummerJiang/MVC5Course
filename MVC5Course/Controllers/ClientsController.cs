@@ -20,7 +20,9 @@ namespace MVC5Course.Controllers
             var client = db.Client.Include(c => c.Occupation);
 
             if (!string.IsNullOrEmpty(search))
-                client=client.Where(p => p.LastName.Contains( search));
+            { 
+                client=client.Where(p => p.FirstName.Contains(search));
+            }
             client.OrderByDescending(x => x.ClientId).Take(10);
             return View(client);
         }
