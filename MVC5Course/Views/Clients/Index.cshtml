@@ -29,9 +29,6 @@
         <th>
             @Html.DisplayNameFor(model => model.CreditRating)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.XCode)
-        </th>
         <th></th>
     </tr>
 
@@ -55,9 +52,6 @@
         <td>
             @Html.DisplayFor(modelItem => item.CreditRating)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.XCode)
-        </td>        
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ClientId }) |
             @Html.ActionLink("Details", "Details", new { id=item.ClientId }) |
