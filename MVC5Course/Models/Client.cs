@@ -38,9 +38,12 @@ namespace MVC5Course.Models
         public string LastName { get; set; }
         [Required]
         [RegularExpression("[MF]", ErrorMessage = "Gender只能輸入MF")]
-        [DisplayName("性別")]
+        [DisplayName("性別")] 
         public string Gender { get; set; }
         [DisplayName("生日")]
+        //[DisplayFormat(DataFormatString ="{0:yyyy/MM/dd}") , ApplyFormatInEditMode=true]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
+        [Range(0,9)]
         public Nullable<System.DateTime> DateOfBirth { get; set; }
         [DisplayName("信用評等")]
         public Nullable<double> CreditRating { get; set; }
