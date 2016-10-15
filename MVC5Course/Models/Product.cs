@@ -25,6 +25,7 @@ namespace MVC5Course.Models
         [Required]
         public string ProductName { get; set; }
         [Required]
+        //[DisplayFormat(DataFormatString ="{}")]
         public Nullable<decimal> Price { get; set; }
         [Required]
         public Nullable<bool> Active { get; set; }
