@@ -2,6 +2,7 @@
 using MVC5Course.Models.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
@@ -65,27 +66,32 @@ namespace MVC5Course.Controllers
             return View(data);
         }
 
+
         public ActionResult Edit(int id)
         {
-            var product = db.Product.Find(id);
-            try
+           
+            Product product = db.Product.Find(id);
+            if (product == null)
             {
-                product.ProductName = "中文";
+                return HttpNotFound();
+            }
+            ViewBag.ProductId = new SelectList(db.Product, "ProductId", "ProductName", product.ProductId);
+            return View(product);
+        }
+
+        // POST: Clients/Edit/5
+        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
+        // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
+        [HttpPost]
+        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock,is刪除")] Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            catch (DbEntityValidationException ex)
-            {
-                foreach (var entityErrors in ex.EntityValidationErrors)
-                {
-                    foreach (var vErrors in entityErrors.ValidationErrors)
-                    {
-                        throw new DbEntityValidationException(vErrors.PropertyName + "錯誤訊息" + vErrors.ErrorMessage);
-                    }
-                }
-
-            }
-
-            return RedirectToAction("Index");
+            ViewBag.ProductId = new SelectList(db.Product, "ProductId", "ProductName", product.ProductId);
+            return View(product);
         }
         public ActionResult Update(int id)
         {
@@ -194,8 +200,6 @@ namespace MVC5Course.Controllers
             var data = db.usp_GetClientContribution(keyword);
             return View(data);
         }
-
-
     }
 
 }
