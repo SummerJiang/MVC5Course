@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,7 +16,8 @@ namespace MVC5Course.Controllers
         public ActionResult Index()
         {
             var db = new FabricsEntities();
-            var data = db.Product.Where(p => p.ProductName.Contains("White"));
+            //var data = db.Product.Where(p => p.ProductName.Contains("White"));
+            var data = db.Product.OrderByDescending(p => p.ProductId).Take(10);
             return View(data);
         }
         public ActionResult Creat()
@@ -52,6 +54,28 @@ namespace MVC5Course.Controllers
             return View(data);
         }
 
+        public ActionResult Edit(int id)
+        {
+            var product = db.Product.Find(id);
+            try
+            {
+                product.ProductName = "中文";
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var entityErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var vErrors in entityErrors.ValidationErrors)
+                    {
+                        throw new DbEntityValidationException(vErrors.PropertyName + "錯誤訊息" + vErrors.ErrorMessage);
+                    }
+                }
+
+            }
+
+            return RedirectToAction("Index");
+        }
         public ActionResult Update(int id)
         {
             var product = db.Product.Find(id);
@@ -74,6 +98,28 @@ namespace MVC5Course.Controllers
             
             return RedirectToAction("Index");
         }
+
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Product product = db.Product.Find(id);
+            product.idDelete = true;
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var entityErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var vErrors in entityErrors.ValidationErrors)
+                    {
+                        throw new DbEntityValidationException(vErrors.PropertyName + "錯誤訊息" + vErrors.ErrorMessage);
+                    }
+                }
+
+            }
+            return RedirectToAction("Index");
+        }
         public ActionResult Add20Percent()
         {
             var data = db.Product.Where(p => p.ProductName.Contains("White"));
@@ -90,6 +136,7 @@ namespace MVC5Course.Controllers
             return RedirectToAction("Index");
             
         }
+
     }
-    
+
 }

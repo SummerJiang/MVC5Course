@@ -19,12 +19,17 @@
         
              
         </th>
+    
+
          
         <th>
                          @Html.DisplayNameFor(model => model.Price)
              
         </th>
-         
+        <th>
+            @Html.DisplayNameFor(model => model.idDelete)
+
+        </th>
         <th>
                          @Html.DisplayNameFor(model => model.Active)
              
@@ -54,7 +59,10 @@
                          @Html.DisplayFor(modelItem => item.Price)
              
         </td>
-         
+        <td>
+            @Html.DisplayFor(modelItem => item.idDelete)
+
+        </td>
         <td>
                          @Html.DisplayFor(modelItem => item.Active)
              
