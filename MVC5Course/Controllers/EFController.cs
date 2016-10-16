@@ -20,19 +20,43 @@ namespace MVC5Course.Controllers
             var data = db.Product.OrderByDescending(p => p.ProductId).Take(10);
             return View(data);
         }
-        public ActionResult Creat()
-        {
-            var product = new Product()
-            {
-                ProductName = "White Cat",
-                Active = true,
-                Price = 100,
-                Stock = 5
-            };
+        //public ActionResult Creat()
+        //{
+        //    var product = new Product()
+        //    {
+        //        ProductName = "White Cat",
+        //        Active = true,
+        //        Price = 100,
+        //        Stock = 5
+        //    };
 
-            db.Product.Add(product);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+        //    db.Product.Add(product);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
+        public ActionResult Create()
+        {
+            ViewBag.ProductId = new SelectList(db.Product, "ProductId", "ProductName");
+
+            return View();
+        }
+
+        // POST: Clients/Create
+        // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
+        // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "ClientId,FirstName,MiddleName,LastName,Gender,DateOfBirth,CreditRating,XCode,OccupationId,TelephoneNumber,Street1,Street2,City,ZipCode,Longitude,Latitude,Notes")] Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Product.Add(product);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.ProductId = new SelectList(db.Product, "ProductId", "ProductName", product.ProductId);
+            return View(product);
         }
 
         public ActionResult Delete(int id)
@@ -102,7 +126,7 @@ namespace MVC5Course.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Product.Find(id);
-            product.idDelete = true;
+            product.is刪除 = true;
             try
             {
                 db.SaveChanges();
