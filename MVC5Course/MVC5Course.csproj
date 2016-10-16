@@ -217,9 +217,6 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>Fabrics.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\usp_Fabrics_Result.cs">
-      <DependentUpon>Fabrics.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\usp_GetClientContribution_Result.cs">
       <DependentUpon>Fabrics.tt</DependentUpon>
     </Compile>
@@ -321,6 +318,7 @@
     <Content Include="Views\EF\Details.cshtml" />
     <Content Include="Views\EF\ClientControlbution.cshtml" />
     <Content Include="Views\EF\ClientContriBution2.cshtml" />
+    <Content Include="Views\EF\ClientContBution3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

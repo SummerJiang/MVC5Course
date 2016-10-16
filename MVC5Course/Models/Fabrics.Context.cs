@@ -34,19 +34,6 @@ namespace MVC5Course.Models
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<vw_ClientContribution> vw_ClientContribution { get; set; }
     
-        public virtual ObjectResult<usp_Fabrics_Result> usp_Fabrics(Nullable<int> createClients, Nullable<int> createOrders)
-        {
-            var createClientsParameter = createClients.HasValue ?
-                new ObjectParameter("CreateClients", createClients) :
-                new ObjectParameter("CreateClients", typeof(int));
-    
-            var createOrdersParameter = createOrders.HasValue ?
-                new ObjectParameter("CreateOrders", createOrders) :
-                new ObjectParameter("CreateOrders", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_Fabrics_Result>("usp_Fabrics", createClientsParameter, createOrdersParameter);
-        }
-    
         public virtual ObjectResult<usp_GetClientContribution_Result> usp_GetClientContribution(string keyword)
         {
             var keywordParameter = keyword != null ?

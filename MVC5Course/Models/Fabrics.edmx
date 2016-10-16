@@ -125,10 +125,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="usp_Fabrics" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CreateClients" Type="int" Mode="In" />
-          <Parameter Name="CreateOrders" Type="int" Mode="In" />
-        </Function>
         <Function Name="usp_GetClientContribution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="keyword" Type="nvarchar" Mode="In" />
         </Function>
@@ -283,10 +279,6 @@
             <End Role="OrderLine" EntitySet="OrderLine" />
           </AssociationSet>
           <EntitySet Name="vw_ClientContribution" EntityType="FabricsModel.vw_ClientContribution" />
-          <FunctionImport Name="usp_Fabrics" ReturnType="Collection(FabricsModel.usp_Fabrics_Result)">
-            <Parameter Name="CreateClients" Mode="In" Type="Int32" />
-            <Parameter Name="CreateOrders" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="usp_GetClientContribution" ReturnType="Collection(FabricsModel.usp_GetClientContribution_Result)">
             <Parameter Name="keyword" Mode="In" Type="String" />
           </FunctionImport>
@@ -324,10 +316,6 @@
           <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="OrderTotal" Type="Decimal" Precision="38" Scale="2" />
         </EntityType>
-        <ComplexType Name="usp_Fabrics_Result">
-          <Property Type="String" Name="Table" Nullable="false" MaxLength="10" />
-          <Property Type="Int32" Name="Count" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="usp_GetClientContribution_Result">
           <Property Type="Int32" Name="ClientId" Nullable="false" />
           <Property Type="String" Name="FirstName" Nullable="true" MaxLength="40" />
@@ -415,14 +403,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="usp_Fabrics" FunctionName="FabricsModel.Store.usp_Fabrics">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FabricsModel.usp_Fabrics_Result">
-                <ScalarProperty Name="Table" ColumnName="Table" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="usp_GetClientContribution" FunctionName="FabricsModel.Store.usp_GetClientContribution">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FabricsModel.usp_GetClientContribution_Result">
