@@ -1,6 +1,7 @@
 ﻿using MVC5Course.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -35,6 +36,8 @@ namespace MVC5Course.Controllers
         public ActionResult Delete(int id)
         {
             var product = db.Product.Find(id);
+            //使用
+            db.OrderLine.RemoveRange(product.OrderLine);
             db.Product.Remove(product);
             db.SaveChanges();
 
@@ -53,7 +56,22 @@ namespace MVC5Course.Controllers
         {
             var product = db.Product.Find(id);
             product.ProductName += "!";
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var entityErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var vErrors in entityErrors.ValidationErrors)
+                    {
+                        throw new DbEntityValidationException(vErrors.PropertyName + "錯誤訊息" + vErrors.ErrorMessage);
+                    }
+                }
+                
+            }
+            
             return RedirectToAction("Index");
         }
         public ActionResult Add20Percent()
