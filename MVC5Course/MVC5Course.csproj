@@ -217,7 +217,17 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>Fabrics.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\usp_Fabrics_Result.cs">
+      <DependentUpon>Fabrics.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usp_GetClientContribution_Result.cs">
+      <DependentUpon>Fabrics.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModel\ClientContribtionViewModel.cs" />
     <Compile Include="Models\ViewModel\ClientLoginViewModel.cs" />
+    <Compile Include="Models\vw_ClientContribution.cs">
+      <DependentUpon>Fabrics.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -309,6 +319,8 @@
     <Content Include="Views\EF\Index.cshtml" />
     <Content Include="Views\EF\Creat.cshtml" />
     <Content Include="Views\EF\Details.cshtml" />
+    <Content Include="Views\EF\ClientControlbution.cshtml" />
+    <Content Include="Views\EF\ClientContriBution2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

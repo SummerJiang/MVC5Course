@@ -1,4 +1,5 @@
 ﻿using MVC5Course.Models;
+using MVC5Course.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
@@ -20,20 +21,6 @@ namespace MVC5Course.Controllers
             var data = db.Product.OrderByDescending(p => p.ProductId).Take(10);
             return View(data);
         }
-        //public ActionResult Creat()
-        //{
-        //    var product = new Product()
-        //    {
-        //        ProductName = "White Cat",
-        //        Active = true,
-        //        Price = 100,
-        //        Stock = 5
-        //    };
-
-        //    db.Product.Add(product);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
         public ActionResult Create()
         {
             ViewBag.ProductId = new SelectList(db.Product, "ProductId", "ProductName");
@@ -144,23 +131,64 @@ namespace MVC5Course.Controllers
             }
             return RedirectToAction("Index");
         }
+        //public ActionResult Add20Percent()
+        //{
+        //    var data = db.Product.Where(p => p.ProductName.Contains("White"));
+
+        //    foreach (var item in data)
+        //    {
+
+        //        if (item.Price.HasValue)
+        //            item.Price = item.Price.Value * 1.2m;
+
+        //    }
+
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
         public ActionResult Add20Percent()
         {
-            var data = db.Product.Where(p => p.ProductName.Contains("White"));
-
-            foreach (var item in data)
+            try
             {
-
-                if (item.Price.HasValue)
-                    item.Price = item.Price.Value * 1.2m;
+                string data = "%Ma%";
+                db.Database.ExecuteSqlCommand("Update dbo.Product SET Price=Price *1.2 where ProductName like @p0", data);
+                
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var entityErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var vErrors in entityErrors.ValidationErrors)
+                    {
+                        throw new DbEntityValidationException(vErrors.PropertyName + "錯誤訊息" + vErrors.ErrorMessage);
+                    }
+                }
 
             }
-
-            db.SaveChanges();
             return RedirectToAction("Index");
-            
-        }
 
+        }
+        public ActionResult ClientControlbution()
+        {
+            var data = db.vw_ClientContribution.Take(10);
+            return View(data);
+        }
+        public ActionResult ClientContriBution2( string keyword="Mary")
+        {
+          var data = db.Database.SqlQuery<ClientContribtionViewModel>(@"
+ SELECT
+        c.ClientId,
+ 	 c.FirstName,
+ 	 c.LastName,
+ 	 (SELECT SUM(o.OrderTotal) 
+ 	  FROM [dbo].[Order] o 
+ 	  WHERE o.ClientId = c.ClientId) as OrderTotal
+ FROM 
+ 	[dbo].[Client] as c
+    WHERE
+        c.FirstName LIKE @p0", "%" + keyword + "%");
+                       return View(data);
+        }
     }
 
 }

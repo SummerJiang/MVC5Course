@@ -66,6 +66,17 @@
           <Property Name="Stock" Type="numeric" Precision="18" Scale="3" />
           <Property Name="is刪除" Type="bit" />
         </EntityType>
+        <!--產生期間發現錯誤:
+警告 6002: 資料表/檢視 'C:\MVC\MVC5COURSE\APP_DATA\FABRICS.MDF.dbo.vw_ClientContribution' 未定義主索引鍵。已推斷此索引鍵，並將定義建立成唯讀的資料表/檢視。-->
+        <EntityType Name="vw_ClientContribution">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="40" />
+          <Property Name="LastName" Type="varchar" MaxLength="40" />
+          <Property Name="OrderTotal" Type="numeric" Precision="38" Scale="2" />
+        </EntityType>
         <Association Name="FK_Client_Occupation">
           <End Role="Occupation" Type="Self.Occupation" Multiplicity="0..1" />
           <End Role="Client" Type="Self.Client" Multiplicity="*" />
@@ -114,12 +125,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="usp_Fabrics" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CreateClients" Type="int" Mode="In" />
+          <Parameter Name="CreateOrders" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetClientContribution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="keyword" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="FabricsModelStoreContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Occupation" EntityType="Self.Occupation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderLine" EntityType="Self.OrderLine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vw_ClientContribution" EntityType="Self.vw_ClientContribution" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_ClientContribution].[ClientId] AS [ClientId], 
+    [vw_ClientContribution].[FirstName] AS [FirstName], 
+    [vw_ClientContribution].[LastName] AS [LastName], 
+    [vw_ClientContribution].[OrderTotal] AS [OrderTotal]
+    FROM [dbo].[vw_ClientContribution] AS [vw_ClientContribution]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Client_Occupation" Association="Self.FK_Client_Occupation">
             <End Role="Occupation" EntitySet="Occupation" />
             <End Role="Client" EntitySet="Client" />
@@ -256,6 +282,14 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="OrderLine" EntitySet="OrderLine" />
           </AssociationSet>
+          <EntitySet Name="vw_ClientContribution" EntityType="FabricsModel.vw_ClientContribution" />
+          <FunctionImport Name="usp_Fabrics" ReturnType="Collection(FabricsModel.usp_Fabrics_Result)">
+            <Parameter Name="CreateClients" Mode="In" Type="Int32" />
+            <Parameter Name="CreateOrders" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetClientContribution" ReturnType="Collection(FabricsModel.usp_GetClientContribution_Result)">
+            <Parameter Name="keyword" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="Product">
           <Key>
@@ -281,6 +315,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vw_ClientContribution">
+          <Key>
+            <PropertyRef Name="ClientId" />
+          </Key>
+          <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="OrderTotal" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <ComplexType Name="usp_Fabrics_Result">
+          <Property Type="String" Name="Table" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="Count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="usp_GetClientContribution_Result">
+          <Property Type="Int32" Name="ClientId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="40" />
+          <Property Type="Decimal" Name="OrderTotal" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -352,6 +405,34 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="vw_ClientContribution">
+            <EntityTypeMapping TypeName="FabricsModel.vw_ClientContribution">
+              <MappingFragment StoreEntitySet="vw_ClientContribution">
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_Fabrics" FunctionName="FabricsModel.Store.usp_Fabrics">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FabricsModel.usp_Fabrics_Result">
+                <ScalarProperty Name="Table" ColumnName="Table" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetClientContribution" FunctionName="FabricsModel.Store.usp_GetClientContribution">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FabricsModel.usp_GetClientContribution_Result">
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="OrderTotal" ColumnName="OrderTotal" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -367,7 +448,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
       </DesignerInfoPropertySet>
