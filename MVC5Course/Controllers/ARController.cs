@@ -7,7 +7,8 @@ using System.Web.Mvc;
 
 namespace MVC5Course.Controllers
 {
-    public class ARController : Controller
+    public class ARController:BaseController
+    //public class ARController : Controller
     {
         // GET: AR
         public ActionResult Index()
@@ -32,6 +33,12 @@ namespace MVC5Course.Controllers
         {
             var FilePath=Server.MapPath("~/Content/螢幕擷取畫面 (1).png");
             return File(FilePath,"image/jpeg","Cut.jpg");
+        }
+        public ActionResult JsonTest()
+        {
+            db.Configuration.LazyLoadingEnabled = false;
+            var data = db.Product.OrderBy(p => p.ProductId).Take(10);
+            return Json(data,JsonRequestBehavior.AllowGet);
         }
         
     }
