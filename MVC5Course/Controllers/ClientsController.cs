@@ -11,6 +11,8 @@ using MVC5Course.Models.ViewModel;
 
 namespace MVC5Course.Controllers
 {
+    //[Authorize(Users ="admin,manager")]
+    //[RequireHttps]
     public class ClientsController:BaseController
    // public class ClientsController : Controller
     {

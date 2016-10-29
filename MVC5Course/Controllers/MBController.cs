@@ -7,12 +7,14 @@ using System.Web.Mvc;
 
 namespace MVC5Course.Controllers
 {
+    [LoacalDeugOnly]
     public class MBController : BaseController
     {
         // GET: MB
+        [Share頁面上常用的ViewBag變數資料Attribute]
         public ActionResult Index()
         {
-            ViewData["Number1"] = "NO.1";
+          
 
             var b = new ClientLoginViewModel()
             {
@@ -23,7 +25,7 @@ namespace MVC5Course.Controllers
             ViewBag.Temp3 = b;
             return View();
         }
-
+        [Share頁面上常用的ViewBag變數資料Attribute]
         public ActionResult MyForm()
         {
             return View();
