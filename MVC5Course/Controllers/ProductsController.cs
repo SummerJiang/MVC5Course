@@ -16,11 +16,15 @@ namespace MVC5Course.Controllers
         ProductRepository repo = RepositoryHelper.GetProductRepository();
 
         // GET: Products
+        //[Route("products/list")]
         public ActionResult Index()
         {
-            var data = repo.All().OrderByDescending(p => p.ProductId).Take(10).ToList();
+            //var data = repo.All().OrderByDescending(p => p.ProductId).Take(10).ToList();
+            var data = repo.Get所有資料_依據ProductId排序(10).ToList();
+
             return View(data);
         }
+        
 
         // GET: Products/Details/5
         public ActionResult Details(int? id)
@@ -102,8 +106,10 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            // Product product = db.Product.Find(id);
+            //Product product = db.Product.Find(id);
             Product product = repo.Find(id.Value);
+            repo.Delete(product);
+            repo.UnitOfWork.Commit();
             if (product == null)
             {
                 return HttpNotFound();
