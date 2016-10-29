@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,5 +14,25 @@ namespace MVC5Course.Controllers
         {
             return View();
         }
+
+        public ActionResult PartialViewTest()
+        {
+            return PartialView();
+        }
+        public ActionResult ContentTest()
+        {
+            return Content("開發實戰","text/plain",Encoding.GetEncoding("Big5"));
+        }
+        public ActionResult FileTest()
+        {
+            var FilePath = Server.MapPath("~/Content/螢幕擷取畫面 (1).png");
+            return File(FilePath,"image,jpeg");
+        }
+        public ActionResult FileTest2()
+        {
+            var FilePath=Server.MapPath("~/Content/螢幕擷取畫面 (1).png");
+            return File(FilePath,"image/jpeg","Cut.jpg");
+        }
+        
     }
 }
