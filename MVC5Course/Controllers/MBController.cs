@@ -1,12 +1,14 @@
 ﻿using MVC5Course.Models.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace MVC5Course.Controllers
 {
+    [HandleError(ExceptionType =typeof(DbEntityValidationException),View = "Error_DbEntityValidationException")] 
     [LoacalDeugOnly]
     public class MBController : BaseController
     {
@@ -52,8 +54,8 @@ namespace MVC5Course.Controllers
         }
         public ActionResult BatchUpdate(ProductBathUpdateViewModel[] items)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 foreach (var item in items)
                 {
                     var product = db.Product.Find(item.ProductId);
@@ -64,7 +66,12 @@ namespace MVC5Course.Controllers
                 }
                 db.SaveChanges();
                 return RedirectToAction("ProductList");
-            }
+            //}
+            return View();
+        }
+        public ActionResult MyError()
+        {
+            throw new InvalidOperationException("ERROR");
             return View();
         }
     }
