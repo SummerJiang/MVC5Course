@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-	
+using System.ComponentModel.DataAnnotations;
+
 namespace MVC5Course.Models
 {   
 	public  class ProductRepository : EFRepository<Product>, IProductRepository
@@ -25,6 +26,13 @@ namespace MVC5Course.Models
         {
             product.is刪除 = true;
         }
+        //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        //{
+        //    //if (this.Stock < 100 & this.Price > 20)
+        //    //{
+        //    //    yield return new ValidationResult("庫存與商品金額的條件錯誤", new string[] { "Price" });
+        //    //}
+        //}
 
 
     }
