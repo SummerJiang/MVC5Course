@@ -206,6 +206,9 @@
     <Compile Include="Models\Client.Partial.cs">
       <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientRepository - 複製.cs">
+      <DependentUpon>IRepository.EF6 - 複製.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClientRepository.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
@@ -215,8 +218,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EFRepository - 複製.cs">
+      <DependentUpon>IRepository.EF6 - 複製.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EFRepository.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EFUnitOfWork - 複製.cs">
+      <DependentUpon>IRepository.EF6 - 複製.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EFUnitOfWork.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
@@ -237,10 +246,18 @@
       <DependentUpon>Fabrics.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IRepository.EF6 - 複製.cs">
+      <DependentUpon>IRepository.EF6 - 複製.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Models\IRepository.EF6.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IUnitOfWork - 複製.cs">
+      <DependentUpon>IRepository.EF6 - 複製.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IUnitOfWork.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
@@ -251,6 +268,9 @@
     </Compile>
     <Compile Include="Models\Occupation.Partial.cs">
       <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OccupationRepository - 複製.cs">
+      <DependentUpon>IRepository.EF6 - 複製.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OccupationRepository.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
@@ -267,8 +287,14 @@
     <Compile Include="Models\OrderLine.Partial.cs">
       <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderLineRepository - 複製.cs">
+      <DependentUpon>IRepository.EF6 - 複製.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OrderLineRepository.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderRepository - 複製.cs">
+      <DependentUpon>IRepository.EF6 - 複製.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrderRepository.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
@@ -279,8 +305,14 @@
     <Compile Include="Models\Product.Partial.cs">
       <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductRepository - 複製.cs">
+      <DependentUpon>IRepository.EF6 - 複製.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductRepository.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RepositoryHelper - 複製.cs">
+      <DependentUpon>IRepository.EF6 - 複製.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RepositoryHelper.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
@@ -299,6 +331,9 @@
     </Compile>
     <Compile Include="Models\vw_ClientContribution.Partial.cs">
       <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vw_ClientContributionRepository - 複製.cs">
+      <DependentUpon>IRepository.EF6 - 複製.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_ClientContributionRepository.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
@@ -470,6 +505,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Fabrics.edmx</DependentUpon>
       <LastGenOutput>Fabrics.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\IRepository.EF6 - 複製.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IRepository.EF6 - 複製.cs</LastGenOutput>
     </Content>
     <Content Include="Models\IRepository.EF6.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
