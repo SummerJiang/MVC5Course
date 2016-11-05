@@ -13,6 +13,7 @@ namespace MVC5Course.Controllers
 {
     //[Authorize(Users ="admin,manager")]
     //[RequireHttps]
+    [Authorize]
     public class ClientsController:BaseController
    // public class ClientsController : Controller
     {

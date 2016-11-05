@@ -12,8 +12,11 @@
 <form action="">
     @*<input type="search" name="search" value="" />*@
     @Html.TextBox("search")
-    @Html.DropDownList("CreditRating","請選擇")
+    @Html.DropDownList("CreditRating", "請選擇")
     @Html.DropDownList("Genger", "請選擇")
+    @Html.CheckBox("aa[0]") 1
+    @Html.CheckBox("aa[1]") 2
+    @Html.CheckBox("aa[2]") 3
 
 
     <input type="submit" value="搜尋" />
