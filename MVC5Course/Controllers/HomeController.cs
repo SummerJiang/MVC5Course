@@ -9,9 +9,9 @@ using System.Web.Security;
 
 namespace MVC5Course.Controllers
 {
-    //public class HomeController : Controller
-    public class HomeController:BaseController
+    public class HomeController : BaseController
     {
+
         public ActionResult Index()
         {
             //Session["aa"] = 1;
@@ -19,16 +19,18 @@ namespace MVC5Course.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-            //var a=Session["aa"];
-            return View();
-        }
-        public ActionResult GetTimer()
+        public ActionResult GetTime()
         {
             return Content(DateTime.Now.ToString());
         }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+            //var a = Session["aa"];
+            return View();
+        }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -38,20 +40,20 @@ namespace MVC5Course.Controllers
 
         public ActionResult Login()
         {
-
             return View();
         }
+
         [HttpPost]
-        public ActionResult Login(LoginViewModel login,string ReturUrl)
+        public ActionResult Login(LoginViewModel login, string ReturnUrl)
         {
             if (ModelState.IsValid)
             {
-                if (login.Email == "123@yahoo.com.tw" && login.Password =="123")
+                if (login.Email == "doggy.huang@gmail.com" &&
+                    login.Password == "123")
                 {
                     FormsAuthentication.RedirectFromLoginPage(login.Email, false);
-                    return Redirect(ReturUrl ?? "/");
+                    return Redirect(ReturnUrl ?? "/");
                 }
-
             }
             return View();
         }
