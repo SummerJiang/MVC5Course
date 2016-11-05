@@ -3,7 +3,6 @@
 }
 
 <div class="jumbotron">
-    @*<h1>ASP.NET</h1>*@
     <h1>
         <button class="btn">取得時間</button>
         @Ajax.ActionLink("取得時間", "GetTime", new AjaxOptions() { Confirm = "確定要取得現在時間嗎？", UpdateTargetId = "getTime" })
@@ -35,6 +34,6 @@
     </div>
 </div>
 
-@section Scripts{
+@section Scripts {
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-    }
+}
