@@ -26,7 +26,7 @@ namespace MVC5Course.Controllers
             //var data = repo.All().OrderByDescending(p => p.ProductId).Take(10).ToList();
             //var data = repo.Get所有資料_依據ProductId排序_取前10筆().ToList();
             //var data = repo.Get所有資料_依據ProductId排序(10).ToList();
-            //var data = repo.All();
+
             var data = repo.All().OrderBy(p => p.ProductId).AsQueryable();
 
             return View(data.ToPagedList(pageNo, 10));
@@ -136,6 +136,11 @@ namespace MVC5Course.Controllers
                 repo.UnitOfWork.Context.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult test()
+        {
+            return PartialView();
         }
     }
 }
